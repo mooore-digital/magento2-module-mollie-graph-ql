@@ -11,6 +11,7 @@ use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Sales\Api\OrderRepositoryInterface;
 use Mollie\Api\Exceptions\ApiException;
 use Mollie\Payment\Model\Mollie;
+use phpDocumentor\Reflection\Types\Boolean;
 
 class ProvideOrderRedirect
 {
@@ -38,12 +39,14 @@ class ProvideOrderRedirect
     }
 
     /**
+     * Create transaction for order and get Mollie payment url
+     *
      * @param string $orderId
-     * @return string|bool|null
+     * @return string|null
      * @throws LocalizedException
      * @throws ApiException
      */
-    public function getRedirectUrl(string $orderId)
+    public function getRedirectUrl(string $orderId): ?string
     {
         $searchCriteria = $this->criteriaBuilder
             ->addFilter('increment_id', $orderId)
@@ -60,6 +63,12 @@ class ProvideOrderRedirect
             return null;
         }
 
-        return $methodInstance->startTransaction($order);
+        $transactionResponse = $methodInstance->startTransaction($order);
+
+        if (!$transactionResponse) {
+            return null;
+        }
+
+        return (string) $transactionResponse;
     }
 }
