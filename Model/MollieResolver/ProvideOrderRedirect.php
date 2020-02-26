@@ -11,7 +11,6 @@ use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Sales\Api\OrderRepositoryInterface;
 use Mollie\Api\Exceptions\ApiException;
 use Mollie\Payment\Model\Mollie;
-use phpDocumentor\Reflection\Types\Boolean;
 
 class ProvideOrderRedirect
 {
