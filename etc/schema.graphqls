@@ -1,0 +1,4 @@
+type Order {
+  order_number: String!
+  payment_url: String @resolver(class: "\\Mooore\\MollieGraphQl\\Model\\Resolver\\PaymentUrl")
+}
