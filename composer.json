@@ -1,0 +1,28 @@
+{
+    "name": "mooore/module-molliegraphql",
+    "description": "Add GraphQl support to Mollie orders",
+    "type": "magento2-module",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jeffrey Hoonakker",
+            "email": "jeffrey@mooore.nl"
+        }
+    ],
+    "require": {
+      "mollie/magento2": "^1.11.0",
+      "magento/framework": "102.*",
+      "magento/module-payment": "100.*",
+      "magento/module-sales": "102.*",
+      "magento/module-graph-ql": "100.*",
+      "magento/module-quote-graph-ql": "100.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Mooore\\MollieGraphQl\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}
