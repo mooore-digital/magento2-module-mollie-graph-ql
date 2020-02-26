@@ -1,5 +1,5 @@
 {
-    "name": "mooore/module-molliegraphql",
+    "name": "mooore/magento2-module-mollie-graph-ql",
     "description": "Add GraphQl support to Mollie orders",
     "type": "magento2-module",
     "license": "MIT",
