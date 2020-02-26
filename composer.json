@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-      "mollie/magento2": "^1.11.0",
+      "mollie/magento2": "^1.11",
       "magento/framework": "102.*",
       "magento/module-payment": "100.*",
       "magento/module-sales": "102.*",
