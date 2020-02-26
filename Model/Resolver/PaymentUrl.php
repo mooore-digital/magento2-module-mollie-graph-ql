@@ -7,31 +7,19 @@ namespace Mooore\MollieGraphQl\Model\Resolver;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
-use Magento\Sales\Api\Data\OrderInterface;
-use Magento\Payment\Helper\Data as PaymentHelper;
-use Magento\Sales\Model\Order;
-use Magento\Tests\NamingConvention\true\mixed;
-use Mollie\Payment\Model\Mollie;
+use Mooore\MollieGraphQl\Model\MollieResolver\ProvideOrderRedirect;
 
 class PaymentUrl implements ResolverInterface
 {
-
     /**
-     * @var PaymentHelper
+     * @var ProvideOrderRedirect
      */
-    private $paymentHelper;
-
-    /**
-     * @var Order
-     */
-    private $order;
+    private $orderRedirect;
 
     public function __construct(
-        OrderInterface $order,
-        PaymentHelper $paymentHelper
+        ProvideOrderRedirect $orderRedirect
     ) {
-        $this->paymentHelper = $paymentHelper;
-        $this->order = $order;
+        $this->orderRedirect = $orderRedirect;
     }
 
     /**
@@ -39,17 +27,8 @@ class PaymentUrl implements ResolverInterface
      *
      * @inheritDoc
      */
-    public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null): mixed
+    public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null): ?string
     {
-        $order = $this->order->loadByIncrementId($value['order_number']);
-
-        $method = $order->getPayment()->getMethod();
-        $methodInstance = $this->paymentHelper->getMethodInstance($method);
-
-        if (!$methodInstance instanceof Mollie) {
-            return null;
-        }
-
-        return $methodInstance->startTransaction($order);
+        return $this->orderRedirect->getRedirectUrl($value['order_number']);
     }
 }
