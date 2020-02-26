@@ -9,7 +9,6 @@
             "email": "jeffrey@mooore.nl"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
       "mollie/magento2": "^1.11.0",
       "magento/framework": "102.*",
