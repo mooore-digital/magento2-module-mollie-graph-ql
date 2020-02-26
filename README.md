@@ -1,6 +1,6 @@
 # Mollie GraphQl
 
-GraphQl support for Mollie Magento 2 module.
+Add GraphQl support to Mollie Magento 2 module.
 
 ## Installation
 ```shell script
