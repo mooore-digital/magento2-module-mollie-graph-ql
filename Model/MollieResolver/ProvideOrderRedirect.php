@@ -9,6 +9,7 @@ use Magento\Framework\Exception\LocalizedException;
 use Magento\Payment\Helper\Data as PaymentHelper;
 use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Sales\Api\OrderRepositoryInterface;
+use Magento\Sales\Model\Order;
 use Mollie\Api\Exceptions\ApiException;
 use Mollie\Payment\Model\Mollie;
 
@@ -38,7 +39,7 @@ class ProvideOrderRedirect
     }
 
     /**
-     * Create transaction for order and get Mollie payment url
+     * Create transaction for order and get Mollie payment url.
      *
      * @param string $orderId
      * @return string|null
@@ -47,13 +48,12 @@ class ProvideOrderRedirect
      */
     public function getRedirectUrl(string $orderId): ?string
     {
-        $searchCriteria = $this->criteriaBuilder
-            ->addFilter('increment_id', $orderId)
-            ->create();
+        /** @var Order $order */
+        $order = $this->getOrderByIncrementId($orderId);
 
-        $orders = $this->order->getList($searchCriteria);
-
-        $order = array_first($orders->getItems());
+        if ($order === null) {
+            return null;
+        }
 
         $method = $order->getPayment()->getMethod();
         $methodInstance = $this->paymentHelper->getMethodInstance($method);
@@ -69,5 +69,25 @@ class ProvideOrderRedirect
         }
 
         return (string) $transactionResponse;
+    }
+
+    /**
+     * Get order by increment id.
+     * @param string $incrementId
+     * @return OrderInterface|null Returns resulting order, null if not found.
+     */
+    private function getOrderByIncrementId(string $incrementId): ?OrderInterface
+    {
+        $searchCriteria = $this->criteriaBuilder
+            ->addFilter('increment_id', $incrementId)
+            ->create();
+
+        $orderList = $this->order->getList($searchCriteria)->getItems();
+
+        if (!count($orderList)) {
+            return null;
+        }
+
+        return array_values($orderList)[0];
     }
 }
