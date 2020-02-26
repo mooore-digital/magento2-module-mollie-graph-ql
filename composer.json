@@ -11,7 +11,12 @@
     ],
     "version": "1.0.0",
     "minimum-stability": "dev",
-    "require": {},
+    "require": {
+      "mollie/magento2": "1.11.0",
+      "magento/framework": "102.0.*",
+      "magento/module-payment": "100.3.*",
+      "magento/module-sales": "102.0.*"
+    },
     "autoload": {
         "psr-4": {
             "Mooore\\MollieGraphQl\\": ""
