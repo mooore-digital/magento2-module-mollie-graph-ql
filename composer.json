@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-      "mollie/magento2": "^1",
+      "mollie/magento2": "^1 | ^2",
       "magento/framework": "102.* | 103.*",
       "magento/module-payment": "100.*",
       "magento/module-sales": "102.* | 103.*",
